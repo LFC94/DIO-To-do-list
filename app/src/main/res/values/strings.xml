@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DIO - To do list</string>
+    <string name="tarefa">Tarefas</string>
+    <string name="criar_tarefa">Criar Tarefa</string>
 </resources>
