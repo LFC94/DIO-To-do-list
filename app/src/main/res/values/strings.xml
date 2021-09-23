@@ -8,4 +8,6 @@
     <string name="edit">Editar</string>
     <string name="delet">Delete</string>
     <string name="atualizar_tarefa">Atualizar Tarefa</string>
+    <string name="label_empty_state">Ops!! Você não possui nenhuma tarefa</string>
+    <string name="labal_info_empty_state">Click no botão para adicionar nova tarefa</string>
 </resources>
