@@ -1,10 +1,13 @@
 package br.com.lfcapp.dio_todolist.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import br.com.lfcapp.dio_todolist.databinding.ActivityAddTaskBinding
+import br.com.lfcapp.dio_todolist.datasource.TaskDataSource
 import br.com.lfcapp.dio_todolist.extensions.format
 import br.com.lfcapp.dio_todolist.extensions.text
+import br.com.lfcapp.dio_todolist.model.Task
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -46,15 +49,23 @@ class AddTaskActivity : AppCompatActivity() {
                 .build()
 
             timePicker.addOnPositiveButtonClickListener {
-                binding.tilTime.text = "${timePicker.hour} ${timePicker.minute}"
+                var hour = (if (timePicker.hour in 0..9) "0" else "") + timePicker.hour;
+                var minute = (if (timePicker.minute in 0..9) "0" else "") + timePicker.minute;
+                binding.tilTime.text = "${hour}:${minute}"
             }
 
             timePicker.show(supportFragmentManager, "TIME_PICKER_TAG")
 
         }
 
-        binding.btnNewTask.setOnClickListener{
-
+        binding.btnNewTask.setOnClickListener {
+            val task = Task(
+                title = binding.tilTitle.text,
+                date = binding.tilDate.text,
+                time = binding.tilTime.text
+            )
+            TaskDataSource.insetTask(task)
+            Log.d("task", "" + TaskDataSource.getList())
         }
 
         binding.btnCancel.setOnClickListener{
