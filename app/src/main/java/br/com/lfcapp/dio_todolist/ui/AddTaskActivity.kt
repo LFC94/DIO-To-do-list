@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import br.com.lfcapp.dio_todolist.R
 import br.com.lfcapp.dio_todolist.databinding.ActivityAddTaskBinding
 import br.com.lfcapp.dio_todolist.datasource.TaskDataSource
 import br.com.lfcapp.dio_todolist.extensions.format
@@ -22,6 +23,17 @@ class AddTaskActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (intent.hasExtra(TASK_ID)){
+            val taskId = intent.getIntExtra(TASK_ID, 0)
+            TaskDataSource.findById(taskId)?.let {
+                binding.tilTitle.text = it.title
+                binding.tilTime.text = it.time
+                binding.tilDate.text = it.date
+
+                binding.btnNewTask.setText(R.string.atualizar_tarefa)
+            }
+        }
 
         insertListeners()
     }
@@ -63,7 +75,8 @@ class AddTaskActivity : AppCompatActivity() {
             val task = Task(
                 title = binding.tilTitle.text,
                 date = binding.tilDate.text,
-                time = binding.tilTime.text
+                time = binding.tilTime.text,
+                id = intent.getIntExtra(TASK_ID, 0)
             )
             TaskDataSource.insetTask(task)
             setResult(Activity.RESULT_OK)
@@ -78,5 +91,9 @@ class AddTaskActivity : AppCompatActivity() {
             finish()
         }
 
+    }
+
+    companion object{
+        const val TASK_ID = "task_id"
     }
 }

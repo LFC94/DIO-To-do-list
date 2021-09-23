@@ -1,5 +1,6 @@
 package br.com.lfcapp.dio_todolist.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -23,14 +24,28 @@ class MainActivity : AppCompatActivity() {
         binding.fabAddTask.setOnClickListener {
             startActivityForResult(Intent(this, AddTaskActivity::class.java), CREATE_NEW_TASK)
         }
+
+        adapter.listenerEdit = {
+            var intent = Intent(this, AddTaskActivity::class.java)
+            intent.putExtra(AddTaskActivity.TASK_ID, it.id)
+            startActivityForResult(intent, CREATE_NEW_TASK)
+        }
+        adapter.listenerDelet = {
+            TaskDataSource.deleteTask(it)
+            updateList()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CREATE_NEW_TASK) {
+        if (requestCode == CREATE_NEW_TASK && resultCode == Activity.RESULT_OK) {
             binding.rvTasks.adapter = adapter
-            adapter.submitList(TaskDataSource.getList())
+            updateList()
         }
+    }
+
+    private fun updateList(){
+        adapter.submitList(TaskDataSource.getList())
     }
 
     companion object {

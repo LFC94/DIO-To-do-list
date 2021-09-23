@@ -5,4 +5,7 @@
     <string name="titulo">Titulo</string>
     <string name="data">Data</string>
     <string name="hora">Hora</string>
+    <string name="edit">Editar</string>
+    <string name="delet">Delete</string>
+    <string name="atualizar_tarefa">Atualizar Tarefa</string>
 </resources>
