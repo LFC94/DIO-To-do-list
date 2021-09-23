@@ -1,5 +1,6 @@
 package br.com.lfcapp.dio_todolist.ui
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -65,10 +66,15 @@ class AddTaskActivity : AppCompatActivity() {
                 time = binding.tilTime.text
             )
             TaskDataSource.insetTask(task)
-            Log.d("task", "" + TaskDataSource.getList())
+            setResult(Activity.RESULT_OK)
+            finish()
         }
 
         binding.btnCancel.setOnClickListener{
+            finish()
+        }
+
+        binding.toolBar.setNavigationOnClickListener {
             finish()
         }
 
